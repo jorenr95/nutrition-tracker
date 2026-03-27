@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base: #07070F;
+  --bg-surface: #0F0F1E;
+  --bg-elevated: #161628;
+  --bg-card: #1A1A30;
+  --border: rgba(85, 81, 184, 0.18);
+  --border-strong: rgba(85, 81, 184, 0.35);
+  --primary: #5551B8;
+  --primary-dark: #3D3A8C;
+  --primary-light: #7B78D4;
+  --primary-glow: rgba(85, 81, 184, 0.22);
+  --accent: #C4FF50;
+  --accent-dim: rgba(196, 255, 80, 0.12);
+  --text-primary: #F0EFF9;
+  --text-secondary: #A8A6CC;
+  --text-muted: #56547A;
+  --macro-carbs: #FF9E6C;
+  --macro-protein: #6CB4FF;
+  --macro-fat: #FFE066;
+  --danger: #FF6B7A;
+  --success: #4ADE80;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Subtle background texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(61, 58, 140, 0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(85, 81, 184, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+
+/* Input reset */
+input, select, textarea {
+  font-family: inherit;
+  background: none;
+  border: none;
+  outline: none;
+  color: inherit;
+}
+
+/* Tap highlight */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Smooth transitions for interactive elements */
+button, a { cursor: pointer; }
+
+/* Number input hide arrows */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+input[type=number] { -moz-appearance: textfield; }
