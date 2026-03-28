@@ -194,7 +194,6 @@ export default function DashboardPage() {
 
   const { current: focusCurrent, max: focusMax } = focusWaardes[focusMetric];
   const focusPct = focusMax > 0 ? Math.min(focusCurrent / focusMax, 1) : 0;
-  const resterend = focusMax - focusCurrent;
   const focusTeVeel = focusMax > 0 && focusCurrent > focusMax * 1.5; // > 150% → red
   const focusGroen  = focusMax > 0 && focusCurrent >= focusMax * 0.995 && !focusTeVeel; // 99.5–150% → green
 
@@ -294,10 +293,10 @@ export default function DashboardPage() {
             </svg>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
               <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '34px', lineHeight: 1, letterSpacing: '-0.02em', color: focusTeVeel ? 'var(--danger)' : focusGroen ? 'var(--success)' : 'var(--text-primary)', transition: 'color 0.3s' }}>
-                {focusCurrent > focusMax ? `+${Math.round(Math.abs(resterend) * 10) / 10}` : Math.round(Math.abs(resterend) * 10) / 10}
+                {Math.round(focusCurrent * 10) / 10}
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 500 }}>
-                {focusCurrent > focusMax ? `${eenheid} over` : `${eenheid} over`}
+                {eenheid} gegeten
               </div>
             </div>
           </div>
