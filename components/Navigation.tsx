@@ -11,11 +11,11 @@ function IconHome({ active }: { active: boolean }) {
   );
 }
 
-function IconPlus({ active }: { active: boolean }) {
+function IconHistory({ active }: { active: boolean }) {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.5 : 2} strokeLinecap="round">
-      <line x1="12" y1="5" x2="12" y2="19" />
-      <line x1="5" y1="12" x2="19" y2="12" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2 : 1.5} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <polyline points="12 7 12 12 15 15" />
     </svg>
   );
 }
@@ -52,7 +52,7 @@ function IconSettings({ active }: { active: boolean }) {
 
 const NAV_ITEMS = [
   { href: '/', label: 'Vandaag', Icon: IconHome },
-  { href: '/loggen', label: 'Loggen', Icon: IconPlus, accent: true },
+  { href: '/geschiedenis', label: 'Geschiedenis', Icon: IconHistory },
   { href: '/database', label: 'Database', Icon: IconDatabase },
   { href: '/recepten', label: 'Recepten', Icon: IconRecipes },
   { href: '/instellingen', label: 'Instellingen', Icon: IconSettings },
@@ -79,9 +79,9 @@ export default function Navigation() {
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '8px 4px 12px' }}>
-        {NAV_ITEMS.map(({ href, label, Icon, accent }) => {
+        {NAV_ITEMS.map(({ href, label, Icon }) => {
           const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
-          const color = isActive ? (accent ? 'var(--accent)' : 'var(--primary-light)') : 'var(--text-muted)';
+          const color = isActive ? 'var(--primary-light)' : 'var(--text-muted)';
 
           return (
             <Link
@@ -99,7 +99,7 @@ export default function Navigation() {
                 letterSpacing: '0.02em',
                 padding: '6px 10px',
                 borderRadius: '12px',
-                background: isActive && accent ? 'rgba(196, 255, 80, 0.08)' : isActive ? 'rgba(85, 81, 184, 0.1)' : 'transparent',
+                background: isActive ? 'rgba(85, 81, 184, 0.1)' : 'transparent',
                 transition: 'color 0.2s, background 0.2s',
                 minWidth: '52px',
               }}

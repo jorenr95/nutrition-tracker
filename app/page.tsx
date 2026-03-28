@@ -351,6 +351,21 @@ export default function DashboardPage() {
           <MaaltijdSectie key={type} type={type} items={dagLog.maaltijden[type]} datum={datum} onVerwijder={handleVerwijder} />
         ))}
       </div>
+
+      {/* FAB — add food */}
+      <Link
+        href={`/loggen?datum=${datum}`}
+        style={{
+          position: 'fixed', bottom: '96px', right: '24px',
+          width: 56, height: 56, borderRadius: '16px',
+          background: 'var(--accent)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 6px 24px rgba(196,255,80,0.35)',
+          fontSize: '28px', fontWeight: 300, color: '#07070F',
+          textDecoration: 'none',
+          zIndex: 50,
+        }}
+      >+</Link>
     </div>
   );
 }
