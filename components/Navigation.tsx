@@ -30,11 +30,13 @@ function IconDatabase({ active }: { active: boolean }) {
   );
 }
 
-function IconHistory({ active }: { active: boolean }) {
+function IconRecipes({ active }: { active: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2 : 1.5} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="9" />
-      <polyline points="12 7 12 12 15 15" />
+      <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+      <rect x="9" y="3" width="6" height="4" rx="1" />
+      <line x1="9" y1="12" x2="15" y2="12" />
+      <line x1="9" y1="16" x2="13" y2="16" />
     </svg>
   );
 }
@@ -52,7 +54,7 @@ const NAV_ITEMS = [
   { href: '/', label: 'Vandaag', Icon: IconHome },
   { href: '/loggen', label: 'Loggen', Icon: IconPlus, accent: true },
   { href: '/database', label: 'Database', Icon: IconDatabase },
-  { href: '/geschiedenis', label: 'Geschiedenis', Icon: IconHistory },
+  { href: '/recepten', label: 'Recepten', Icon: IconRecipes },
   { href: '/instellingen', label: 'Instellingen', Icon: IconSettings },
 ];
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { getDoelen, slaDoelen, wisAlleData, getNaam, slaNaamOp } from '@/lib/opslag';
 import type { Doelen } from '@/lib/types';
 
@@ -211,6 +212,17 @@ export default function InstellingenPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Geschiedenis link */}
+      <div style={{ margin: '0 16px 16px', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border)', padding: '20px' }}>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>📅</span> Geschiedenis
+        </div>
+        <Link href="/geschiedenis" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>
+          <span>Bekijk logboek &amp; exporteer CSV</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 18l6-6-6-6" /></svg>
+        </Link>
       </div>
 
       {/* Data management */}
