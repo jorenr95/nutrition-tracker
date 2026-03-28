@@ -1,3 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  transpilePackages: ['@zxing/browser', '@zxing/library'],
+};
 export default nextConfig;

@@ -7,6 +7,36 @@ import {
 } from '@/lib/opslag';
 import type { Voedsel, VoedselCategorie } from '@/lib/types';
 import { CATEGORIE_LABELS } from '@/lib/voedselDatabase';
+import BarcodeScanner from '@/components/BarcodeScanner';
+
+// ── Open Food Facts ─────────────────────────────────────────────────────────────
+
+interface OpenFoodFactsResultaat {
+  naam: string;
+  kcalPer100g: number;
+  eiwitPer100g: number;
+  koolhydratenPer100g: number;
+  vettenPer100g: number;
+}
+
+async function haalVoedselInfoOp(barcode: string): Promise<OpenFoodFactsResultaat | null> {
+  try {
+    const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
+    const data = await res.json();
+    if (data.status !== 1 || !data.product) return null;
+    const p = data.product;
+    const n = p.nutriments ?? {};
+    return {
+      naam: p.product_name_nl || p.product_name || '',
+      kcalPer100g: Math.round(n['energy-kcal_100g'] ?? n['energy-kcal'] ?? 0),
+      eiwitPer100g: Math.round((n['proteins_100g'] ?? 0) * 10) / 10,
+      koolhydratenPer100g: Math.round((n['carbohydrates_100g'] ?? 0) * 10) / 10,
+      vettenPer100g: Math.round((n['fat_100g'] ?? 0) * 10) / 10,
+    };
+  } catch {
+    return null;
+  }
+}
 
 const ALLE_CATEGORIEEN = Object.keys(CATEGORIE_LABELS) as VoedselCategorie[];
 
@@ -14,20 +44,22 @@ const ALLE_CATEGORIEEN = Object.keys(CATEGORIE_LABELS) as VoedselCategorie[];
 
 interface VoedselFormProps {
   bestaand?: Voedsel;          // provided → edit mode
+  voorgevuld?: Partial<Voedsel>; // pre-filled from barcode scan
   onOpgeslagen: () => void;
   onAnnuleer: () => void;
 }
 
-function VoedselForm({ bestaand, onOpgeslagen, onAnnuleer }: VoedselFormProps) {
+function VoedselForm({ bestaand, voorgevuld, onOpgeslagen, onAnnuleer }: VoedselFormProps) {
   const isBewerken = bestaand !== undefined;
   const isIngebouwd = bestaand ? isIngebouwdVoedsel(bestaand.id) : false;
 
-  const [naam, setNaam] = useState(bestaand?.naam ?? '');
-  const [kcal, setKcal] = useState(String(bestaand?.kcalPer100g ?? ''));
-  const [eiwit, setEiwit] = useState(String(bestaand?.eiwitPer100g ?? ''));
-  const [koolhydraten, setKoolhydraten] = useState(String(bestaand?.koolhydratenPer100g ?? ''));
-  const [vetten, setVetten] = useState(String(bestaand?.vettenPer100g ?? ''));
-  const [categorie, setCategorie] = useState<VoedselCategorie>(bestaand?.categorie ?? 'overig');
+  const init = bestaand ?? voorgevuld ?? {};
+  const [naam, setNaam] = useState((init as Voedsel).naam ?? '');
+  const [kcal, setKcal] = useState(String((init as Voedsel).kcalPer100g ?? ''));
+  const [eiwit, setEiwit] = useState(String((init as Voedsel).eiwitPer100g ?? ''));
+  const [koolhydraten, setKoolhydraten] = useState(String((init as Voedsel).koolhydratenPer100g ?? ''));
+  const [vetten, setVetten] = useState(String((init as Voedsel).vettenPer100g ?? ''));
+  const [categorie, setCategorie] = useState<VoedselCategorie>((init as Voedsel).categorie ?? 'overig');
   const [fout, setFout] = useState('');
 
   function handleOpslaan() {
@@ -143,15 +175,34 @@ export default function DatabasePage() {
   const [zoekterm, setZoekterm] = useState('');
   const [actieveCategorie, setActieveCategorie] = useState<VoedselCategorie | 'alle'>('alle');
   const [uitvouwen, setUitvouwen] = useState<string | null>(null);
-  const [bewerken, setBewerken] = useState<Voedsel | null>(null); // edit existing
-  const [toonNieuw, setToonNieuw] = useState(false);              // create new
+  const [bewerken, setBewerken] = useState<Voedsel | null>(null);
+  const [toonNieuw, setToonNieuw] = useState(false);
   const [bevestigVerwijder, setBevestigVerwijder] = useState<string | null>(null);
+  const [scannerOpen, setScannerOpen] = useState(false);
+  const [scanLaden, setScanLaden] = useState(false);
+  const [scanFout, setScanFout] = useState('');
+  const [voorgevuld, setVoorgevuld] = useState<Partial<Voedsel> | null>(null);
 
   function laadDatabase() {
     setDatabase(getVoedselDatabase());
   }
 
   useEffect(() => { laadDatabase(); }, []);
+
+  async function handleBarcode(barcode: string) {
+    setScannerOpen(false);
+    setScanLaden(true);
+    setScanFout('');
+    const resultaat = await haalVoedselInfoOp(barcode);
+    setScanLaden(false);
+    if (!resultaat) {
+      setScanFout(`Barcode ${barcode} niet gevonden in Open Food Facts.`);
+      setToonNieuw(true);
+      return;
+    }
+    setVoorgevuld(resultaat);
+    setToonNieuw(true);
+  }
 
   const aantalEigen = database.filter((v) => v.aangepast).length;
   const aantalBewerkt = database.filter((v) => v.bewerkt).length;
@@ -328,25 +379,72 @@ export default function DatabasePage() {
 
       <div style={{ height: '24px' }} />
 
-      {/* FAB */}
-      <button
-        onClick={() => setToonNieuw(true)}
-        style={{
-          position: 'fixed', bottom: '96px', right: '24px',
-          width: 56, height: 56, borderRadius: '16px',
-          background: 'linear-gradient(135deg, var(--primary), var(--primary-light))',
-          border: 'none', color: '#fff',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 6px 24px rgba(85,81,184,0.5)',
-          fontSize: '26px', fontWeight: 300, cursor: 'pointer', zIndex: 50,
-        }}
-      >+</button>
+      {/* FABs: scan + add */}
+      <div style={{ position: 'fixed', bottom: '96px', right: '24px', display: 'flex', flexDirection: 'column', gap: '10px', zIndex: 50 }}>
+        {/* Barcode scan button */}
+        <button
+          onClick={() => { setScanFout(''); setScannerOpen(true); }}
+          style={{
+            width: 56, height: 56, borderRadius: '16px',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-strong)', color: 'var(--accent)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+          }}
+          title="Scan barcode"
+        >
+          {scanLaden
+            ? <div style={{ width: 22, height: 22, border: '2px solid var(--border-strong)', borderTopColor: 'var(--accent)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+            : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
+                <rect x="7" y="7" width="3" height="10" rx="1" /><rect x="14" y="7" width="3" height="10" rx="1" />
+              </svg>
+          }
+        </button>
 
-      {/* Create form */}
+        {/* Add manually */}
+        <button
+          onClick={() => { setVoorgevuld(null); setToonNieuw(true); }}
+          style={{
+            width: 56, height: 56, borderRadius: '16px',
+            background: 'linear-gradient(135deg, var(--primary), var(--primary-light))',
+            border: 'none', color: '#fff',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 6px 24px rgba(85,81,184,0.5)',
+            fontSize: '26px', fontWeight: 300, cursor: 'pointer',
+          }}
+        >+</button>
+      </div>
+
+      {/* Scan error toast */}
+      {scanFout && (
+        <div style={{
+          position: 'fixed', bottom: '170px', left: '16px', right: '16px',
+          background: 'var(--bg-elevated)', border: '1px solid var(--border-strong)',
+          borderRadius: '14px', padding: '12px 16px', zIndex: 50,
+          display: 'flex', alignItems: 'center', gap: '10px',
+        }}>
+          <span style={{ fontSize: '18px' }}>⚠️</span>
+          <span style={{ flex: 1, fontSize: '13px', color: 'var(--text-secondary)' }}>{scanFout}</span>
+          <button onClick={() => setScanFout('')} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '16px' }}>×</button>
+        </div>
+      )}
+
+      {/* Barcode scanner */}
+      {scannerOpen && (
+        <BarcodeScanner
+          onGescand={handleBarcode}
+          onSluiten={() => setScannerOpen(false)}
+        />
+      )}
+
+      {/* Create form (possibly pre-filled from scan) */}
       {toonNieuw && (
         <VoedselForm
-          onOpgeslagen={() => { setToonNieuw(false); laadDatabase(); }}
-          onAnnuleer={() => setToonNieuw(false)}
+          voorgevuld={voorgevuld ?? undefined}
+          onOpgeslagen={() => { setToonNieuw(false); setVoorgevuld(null); laadDatabase(); }}
+          onAnnuleer={() => { setToonNieuw(false); setVoorgevuld(null); }}
         />
       )}
 
@@ -358,6 +456,8 @@ export default function DatabasePage() {
           onAnnuleer={() => setBewerken(null)}
         />
       )}
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }
