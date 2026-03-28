@@ -106,7 +106,7 @@ function VoedselForm({ bestaand, voorgevuld, onOpgeslagen, onAnnuleer }: Voedsel
 
         {/* Title */}
         <div style={{ marginBottom: '20px' }}>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '20px', letterSpacing: '-0.01em' }}>
+          <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '20px', letterSpacing: '-0.01em' }}>
             {isBewerken ? 'Product bewerken' : 'Eigen product toevoegen'}
           </div>
           {isBewerken && isIngebouwd && (
@@ -158,7 +158,7 @@ function VoedselForm({ bestaand, voorgevuld, onOpgeslagen, onAnnuleer }: Voedsel
             <button onClick={onAnnuleer} style={{ flex: 1, padding: '13px', borderRadius: '12px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
               Annuleer
             </button>
-            <button onClick={handleOpslaan} style={{ flex: 2, padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Syne, sans-serif', fontSize: '15px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}>
+            <button onClick={handleOpslaan} style={{ flex: 2, padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Lora, serif', fontSize: '15px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}>
               {isBewerken ? 'Wijzigingen opslaan' : 'Toevoegen'}
             </button>
           </div>
@@ -230,7 +230,7 @@ export default function DatabasePage() {
     <div>
       {/* Header */}
       <div style={{ padding: '52px 20px 16px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Database</div>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Database</div>
         <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
           {database.length} producten
           {aantalEigen > 0 && ` · ${aantalEigen} eigen`}
@@ -301,7 +301,7 @@ export default function DatabasePage() {
                   background: isCustom ? 'rgba(196,255,80,0.1)' : isBewerktIngebouwd ? 'rgba(255,158,108,0.1)' : 'rgba(85,81,184,0.12)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <span style={{ fontSize: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, color: isCustom ? 'var(--accent)' : isBewerktIngebouwd ? 'var(--macro-carbs)' : 'var(--primary-light)' }}>
+                  <span style={{ fontSize: '13px', fontFamily: 'Lora, serif', fontWeight: 700, color: isCustom ? 'var(--accent)' : isBewerktIngebouwd ? 'var(--macro-carbs)' : 'var(--primary-light)' }}>
                     {voedsel.kcalPer100g}
                   </span>
                 </div>
@@ -330,7 +330,7 @@ export default function DatabasePage() {
                       { label: 'Vetten', val: voedsel.vettenPer100g, kleur: 'var(--macro-fat)', unit: 'g' },
                     ].map(({ label, val, kleur, unit }) => (
                       <div key={label} style={{ textAlign: 'center', background: 'var(--bg-elevated)', borderRadius: '10px', padding: '10px 4px', border: '1px solid var(--border)' }}>
-                        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: kleur }}>{val}{unit}</div>
+                        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '15px', color: kleur }}>{val}{unit}</div>
                         <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>{label}</div>
                       </div>
                     ))}

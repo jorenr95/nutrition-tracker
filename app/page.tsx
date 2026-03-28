@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import MacroRing, { ProgressBar } from '@/components/MacroRing';
 import {
-  getDagLog, getDoelen, berekenDagTotalen, verwijderItem, vandaagDatum,
+  getDagLog, getDoelen, berekenDagTotalen, verwijderItem, vandaagDatum, getNaam,
 } from '@/lib/opslag';
 import type { DagLog, Doelen, MaaltijdType, MaaltijdItem } from '@/lib/types';
 
@@ -92,12 +92,12 @@ function MaaltijdSectie({ type, items, datum, onVerwijder }: MaaltijdSectieProps
       >
         <span style={{ width: 36, height: 36, borderRadius: 10, background: info.kleur, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', flexShrink: 0 }}>{info.icon}</span>
         <div style={{ flex: 1, textAlign: 'left' }}>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '15px' }}>{info.label}</div>
+          <div style={{ fontFamily: 'Lora, serif', fontWeight: 600, fontSize: '15px' }}>{info.label}</div>
           <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '1px' }}>
             {items.length === 0 ? 'Niets gelogd' : `${items.length} product${items.length !== 1 ? 'en' : ''}`}
           </div>
         </div>
-        {totaalKcal > 0 && <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-secondary)' }}>{totaalKcal} kcal</span>}
+        {totaalKcal > 0 && <span style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-secondary)' }}>{totaalKcal} kcal</span>}
         <span style={{ color: 'var(--text-muted)', fontSize: '12px', transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', marginLeft: '4px' }}>▾</span>
       </button>
 
@@ -114,7 +114,7 @@ function MaaltijdSectie({ type, items, datum, onVerwijder }: MaaltijdSectieProps
                   <span style={{ fontSize: '11px', color: 'var(--macro-fat)' }}>{item.vetten}g VT</span>
                 </div>
               </div>
-              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '13px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{item.kcal} kcal</span>
+              <span style={{ fontFamily: 'Lora, serif', fontWeight: 600, fontSize: '13px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{item.kcal} kcal</span>
               <button onClick={() => onVerwijder(type, item.id)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', padding: '4px', borderRadius: '6px', display: 'flex', alignItems: 'center' }} aria-label="Verwijder">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                   <polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" /><path d="M9 6V4h6v2" />
@@ -141,12 +141,14 @@ export default function DashboardPage() {
   const [dagLog, setDagLog] = useState<DagLog | null>(null);
   const [doelen, setDoelen] = useState<Doelen | null>(null);
   const [focusMetric, setFocusMetric] = useState<FocusMetric>('kcal');
+  const [naam, setNaam] = useState('');
 
   const laadData = useCallback(() => {
     const d = vandaagDatum();
     setDatum(d);
     setDagLog(getDagLog(d));
     setDoelen(getDoelen());
+    setNaam(getNaam());
   }, []);
 
   useEffect(() => {
@@ -219,8 +221,8 @@ export default function DashboardPage() {
         <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 500, marginBottom: '4px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
           {formatDatum(datum || new Date().toISOString().split('T')[0])}
         </div>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em' }}>
-          {dagBegroeting()} 👋
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em' }}>
+          {dagBegroeting()}{naam ? `, ${naam}` : ''} 👋
         </div>
       </div>
 
@@ -291,7 +293,7 @@ export default function DashboardPage() {
               </defs>
             </svg>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
-              <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '34px', lineHeight: 1, letterSpacing: '-0.02em', color: focusTeVeel ? 'var(--danger)' : focusGroen ? 'var(--success)' : 'var(--text-primary)', transition: 'color 0.3s' }}>
+              <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '34px', lineHeight: 1, letterSpacing: '-0.02em', color: focusTeVeel ? 'var(--danger)' : focusGroen ? 'var(--success)' : 'var(--text-primary)', transition: 'color 0.3s' }}>
                 {focusCurrent > focusMax ? `+${Math.round(Math.abs(resterend) * 10) / 10}` : Math.round(Math.abs(resterend) * 10) / 10}
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 500 }}>
@@ -304,14 +306,14 @@ export default function DashboardPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', minWidth: '90px' }}>
             <div>
               <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 500, marginBottom: '2px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Gegeten</div>
-              <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '20px', color: 'var(--text-primary)' }}>
+              <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '20px', color: 'var(--text-primary)' }}>
                 {Math.round(focusCurrent * 10) / 10}<span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-muted)', marginLeft: '2px' }}>{eenheid}</span>
               </div>
             </div>
             <div style={{ width: '100%', height: '1px', background: 'var(--border)' }} />
             <div>
               <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 500, marginBottom: '2px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Doel</div>
-              <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '20px', color: 'var(--text-secondary)' }}>
+              <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '20px', color: 'var(--text-secondary)' }}>
                 {focusMax}<span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-muted)', marginLeft: '2px' }}>{eenheid}</span>
               </div>
             </div>
@@ -344,7 +346,7 @@ export default function DashboardPage() {
 
       {/* Meal sections */}
       <div style={{ padding: '0 16px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '17px', marginBottom: '12px', letterSpacing: '-0.01em' }}>Maaltijden</div>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '17px', marginBottom: '12px', letterSpacing: '-0.01em' }}>Maaltijden</div>
         {(['ontbijt', 'lunch', 'diner', 'snacks'] as MaaltijdType[]).map((type) => (
           <MaaltijdSectie key={type} type={type} items={dagLog.maaltijden[type]} datum={datum} onVerwijder={handleVerwijder} />
         ))}

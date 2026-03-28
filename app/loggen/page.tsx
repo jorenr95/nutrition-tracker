@@ -64,7 +64,7 @@ function VoedselModal({ voedsel, maaltijd, datum, onSluiten, onToegevoegd }: Voe
           <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px', fontWeight: 500 }}>
             {CATEGORIE_LABELS[voedsel.categorie] ?? voedsel.categorie}
           </div>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '22px', letterSpacing: '-0.01em', marginBottom: '4px' }}>
+          <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '22px', letterSpacing: '-0.01em', marginBottom: '4px' }}>
             {voedsel.naam}
           </div>
           <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Per 100g: {voedsel.kcalPer100g} kcal</div>
@@ -92,7 +92,7 @@ function VoedselModal({ voedsel, maaltijd, datum, onSluiten, onToegevoegd }: Voe
                   borderRadius: '12px',
                   padding: '10px 40px 10px 16px',
                   fontSize: '24px',
-                  fontFamily: 'Syne, sans-serif',
+                  fontFamily: 'Lora, serif',
                   fontWeight: 700,
                   color: 'var(--text-primary)',
                 }}
@@ -135,7 +135,7 @@ function VoedselModal({ voedsel, maaltijd, datum, onSluiten, onToegevoegd }: Voe
               { label: 'Vetten', val: macros.vetten, unit: 'g', color: 'var(--macro-fat)' },
             ].map(({ label, val, unit, color }) => (
               <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '17px', color }}>{val}{unit}</div>
+                <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '17px', color }}>{val}{unit}</div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>{label}</div>
               </div>
             ))}
@@ -149,7 +149,7 @@ function VoedselModal({ voedsel, maaltijd, datum, onSluiten, onToegevoegd }: Voe
             width: '100%', padding: '15px',
             background: 'linear-gradient(135deg, var(--primary), var(--primary-light))',
             border: 'none', borderRadius: '14px',
-            color: '#fff', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px',
+            color: '#fff', fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px',
             cursor: 'pointer',
             boxShadow: '0 4px 20px rgba(85, 81, 184, 0.4)',
           }}
@@ -199,7 +199,7 @@ function LoggenContent() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
         </button>
         <div>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '20px', letterSpacing: '-0.01em' }}>Voeding toevoegen</div>
+          <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '20px', letterSpacing: '-0.01em' }}>Voeding toevoegen</div>
         </div>
       </div>
 
@@ -301,7 +301,7 @@ function LoggenContent() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0,
                 color: 'var(--primary-light)',
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: 'Lora, serif',
                 fontWeight: 700,
                 fontSize: '13px',
               }}>

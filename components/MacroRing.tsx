@@ -65,7 +65,7 @@ export default function MacroRing({
             <span style={{
               fontSize: size > 120 ? '22px' : '13px',
               fontWeight: 700,
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'Lora, serif',
               color: over ? 'var(--danger)' : 'var(--text-primary)',
               lineHeight: 1,
             }}>
@@ -108,7 +108,7 @@ export function ProgressBar({ current, max, color, label, showValues = true, hei
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
           {label && <span style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 500 }}>{label}</span>}
           {showValues && (
-            <span style={{ fontSize: '12px', color: over ? 'var(--danger)' : 'var(--text-muted)', fontFamily: 'Syne, sans-serif' }}>
+            <span style={{ fontSize: '12px', color: over ? 'var(--danger)' : 'var(--text-muted)', fontFamily: 'Lora, serif' }}>
               {Math.round(current)} / {max}
             </span>
           )}

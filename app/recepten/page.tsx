@@ -95,7 +95,7 @@ function ReceptForm({ database, bestaand, onOpgeslagen, onAnnuleer }: ReceptForm
       onClick={(e) => { if (e.target === e.currentTarget) onAnnuleer(); }}>
       <div style={{ background: 'var(--bg-elevated)', borderRadius: '24px 24px 0 0', border: '1px solid var(--border)', borderBottom: 'none', padding: '24px 20px 40px', maxHeight: '92vh', overflowY: 'auto' }}>
         <div style={{ width: 36, height: 4, background: 'var(--border-strong)', borderRadius: 99, margin: '0 auto 20px' }} />
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '20px', marginBottom: '20px' }}>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '20px', marginBottom: '20px' }}>
           {bestaand ? 'Recept bewerken' : 'Nieuw recept'}
         </div>
 
@@ -121,7 +121,7 @@ function ReceptForm({ database, bestaand, onOpgeslagen, onAnnuleer }: ReceptForm
             <label style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '0.04em', textTransform: 'uppercase' as const, display: 'block', marginBottom: '6px' }}>Aantal porties</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button onClick={() => setPortieAantal(Math.max(1, portieAantal - 1))} style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
-              <div style={{ flex: 1, textAlign: 'center', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '20px' }}>{portieAantal}</div>
+              <div style={{ flex: 1, textAlign: 'center', fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '20px' }}>{portieAantal}</div>
               <button onClick={() => setPortieAantal(portieAantal + 1)} style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
             </div>
           </div>
@@ -178,7 +178,7 @@ function ReceptForm({ database, bestaand, onOpgeslagen, onAnnuleer }: ReceptForm
                   { l: 'VT', v: perPortie.vetten, c: 'var(--macro-fat)', u: 'g' },
                 ].map(({ l, v, c, u }) => (
                   <div key={l} style={{ textAlign: 'center' }}>
-                    <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px', color: c }}>{v}{u}</div>
+                    <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', color: c }}>{v}{u}</div>
                     <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>{l}</div>
                   </div>
                 ))}
@@ -188,7 +188,7 @@ function ReceptForm({ database, bestaand, onOpgeslagen, onAnnuleer }: ReceptForm
 
           <div style={{ display: 'flex', gap: '10px' }}>
             <button onClick={onAnnuleer} style={{ flex: 1, padding: '13px', borderRadius: '12px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>Annuleer</button>
-            <button onClick={handleOpslaan} style={{ flex: 2, padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Syne, sans-serif', fontSize: '15px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}>Opslaan</button>
+            <button onClick={handleOpslaan} style={{ flex: 2, padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Lora, serif', fontSize: '15px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}>Opslaan</button>
           </div>
         </div>
       </div>
@@ -237,7 +237,7 @@ function ReceptDetail({ recept, onSluiten, onBewerken, onVerwijderen }: ReceptDe
         <div style={{ width: 36, height: 4, background: 'var(--border-strong)', borderRadius: 99, margin: '0 auto 20px' }} />
 
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '22px', flex: 1, marginRight: '12px' }}>{recept.naam}</div>
+          <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '22px', flex: 1, marginRight: '12px' }}>{recept.naam}</div>
           <div style={{ display: 'flex', gap: '8px' }}>
             <button onClick={onBewerken} style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '10px', color: 'var(--text-secondary)', padding: '6px 10px', fontSize: '13px', cursor: 'pointer' }}>Bewerken</button>
             <button onClick={onVerwijderen} style={{ background: 'rgba(255,107,122,0.1)', border: '1px solid rgba(255,107,122,0.3)', borderRadius: '10px', color: 'var(--danger)', padding: '6px 10px', fontSize: '13px', cursor: 'pointer' }}>Verwijder</button>
@@ -257,7 +257,7 @@ function ReceptDetail({ recept, onSluiten, onBewerken, onVerwijderen }: ReceptDe
               { l: 'Vetten', v: perPortie.vetten, c: 'var(--macro-fat)', u: 'g' },
             ].map(({ l, v, c, u }) => (
               <div key={l} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '18px', color: c }}>{v}{u}</div>
+                <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '18px', color: c }}>{v}{u}</div>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>{l}</div>
               </div>
             ))}
@@ -284,7 +284,7 @@ function ReceptDetail({ recept, onSluiten, onBewerken, onVerwijderen }: ReceptDe
               style={{ flex: 1, padding: '13px 14px', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', fontSize: '14px', color: 'var(--text-primary)', cursor: 'pointer' }}>
               {MAALTIJDEN.map((m) => <option key={m} value={m}>{MAALTIJD_LABELS[m]}</option>)}
             </select>
-            <button onClick={handleLoggen} style={{ flex: 2, padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Syne, sans-serif', fontSize: '15px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}>
+            <button onClick={handleLoggen} style={{ flex: 2, padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Lora, serif', fontSize: '15px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}>
               Loggen vandaag
             </button>
           </div>
@@ -329,7 +329,7 @@ export default function ReceptenPage() {
   return (
     <div>
       <div style={{ padding: '52px 20px 16px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Recepten</div>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Recepten</div>
         <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{recepten.length} recept{recepten.length !== 1 ? 'en' : ''}</div>
       </div>
 
@@ -337,11 +337,11 @@ export default function ReceptenPage() {
         {recepten.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>🍳</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>Nog geen recepten</div>
+            <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>Nog geen recepten</div>
             <div style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>Maak recepten aan om ze snel toe te kunnen voegen aan je daglog.</div>
             <button
               onClick={() => setToonForm(true)}
-              style={{ padding: '12px 24px', borderRadius: '14px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}
+              style={{ padding: '12px 24px', borderRadius: '14px', background: 'linear-gradient(135deg, var(--primary), var(--primary-light))', border: 'none', color: '#fff', fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '15px', cursor: 'pointer', boxShadow: '0 4px 16px rgba(85,81,184,0.4)' }}
             >Eerste recept maken</button>
           </div>
         ) : (
@@ -357,7 +357,7 @@ export default function ReceptenPage() {
                   <div style={{ fontWeight: 600, fontSize: '15px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{recept.naam}</div>
                   {recept.beschrijving && <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{recept.beschrijving}</div>}
                   <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-                    <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'Syne, sans-serif', fontWeight: 600 }}>{Math.round(recept.totaalKcal / recept.aantalPorties)} kcal</span>
+                    <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'Lora, serif', fontWeight: 600 }}>{Math.round(recept.totaalKcal / recept.aantalPorties)} kcal</span>
                     <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>/ portie · {recept.aantalPorties}x</span>
                   </div>
                 </div>

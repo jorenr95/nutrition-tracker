@@ -7,6 +7,7 @@ const SLEUTELS = {
   AANGEPAST_VOEDSEL: 'vt_voedsel',
   RECEPTEN: 'vt_recepten',
   EDITS: 'vt_edits',
+  NAAM: 'vt_naam',
 } as const;
 
 function getEdits(): Record<string, Voedsel> {
@@ -91,6 +92,16 @@ export function getDoelen(): Doelen {
 export function slaDoelen(doelen: Doelen): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(SLEUTELS.DOELEN, JSON.stringify(doelen));
+}
+
+export function getNaam(): string {
+  if (typeof window === 'undefined') return '';
+  return localStorage.getItem(SLEUTELS.NAAM) ?? '';
+}
+
+export function slaNaamOp(naam: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(SLEUTELS.NAAM, naam.trim());
 }
 
 export function getVoedselDatabase(): Voedsel[] {

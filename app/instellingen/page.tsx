@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getDoelen, slaDoelen, wisAlleData } from '@/lib/opslag';
+import { getDoelen, slaDoelen, wisAlleData, getNaam, slaNaamOp } from '@/lib/opslag';
 import type { Doelen } from '@/lib/types';
 
 function MacroSlider({ label, kleur, waarde, min, max, stap, onChange }: {
@@ -26,7 +26,7 @@ function MacroSlider({ label, kleur, waarde, min, max, stap, onChange }: {
               border: `1px solid ${kleur}40`,
               borderRadius: '8px',
               fontSize: '16px',
-              fontFamily: 'Syne, sans-serif',
+              fontFamily: 'Lora, serif',
               fontWeight: 700,
               color: kleur,
             }}
@@ -59,15 +59,18 @@ function MacroSlider({ label, kleur, waarde, min, max, stap, onChange }: {
 
 export default function InstellingenPage() {
   const [doelen, setDoelen] = useState<Doelen>({ kcal: 2000, eiwit: 150, koolhydraten: 200, vetten: 65 });
+  const [naam, setNaam] = useState('');
   const [opgeslagen, setOpgeslagen] = useState(false);
   const [wisBevestig, setWisBevestig] = useState(false);
 
   useEffect(() => {
     setDoelen(getDoelen());
+    setNaam(getNaam());
   }, []);
 
   function handleOpslaan() {
     slaDoelen(doelen);
+    slaNaamOp(naam);
     setOpgeslagen(true);
     setTimeout(() => setOpgeslagen(false), 2000);
   }
@@ -89,13 +92,37 @@ export default function InstellingenPage() {
     <div>
       {/* Header */}
       <div style={{ padding: '52px 20px 24px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Instellingen</div>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Instellingen</div>
         <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Stel je dagelijkse doelen in</div>
+      </div>
+
+      {/* Profile section */}
+      <div style={{ margin: '0 16px 16px', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border)', padding: '20px' }}>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>👤</span> Profiel
+        </div>
+        <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>Voornaam</label>
+        <input
+          type="text"
+          value={naam}
+          onChange={(e) => setNaam(e.target.value)}
+          placeholder="Jouw naam…"
+          style={{
+            width: '100%',
+            padding: '12px 14px',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-strong)',
+            borderRadius: '12px',
+            fontSize: '15px',
+            color: 'var(--text-primary)',
+          }}
+        />
+        <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>Wordt gebruikt voor de begroeting op de startpagina.</div>
       </div>
 
       {/* Goals section */}
       <div style={{ margin: '0 16px 16px', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border)', padding: '20px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span>🎯</span> Dagelijkse doelen
         </div>
 
@@ -137,7 +164,7 @@ export default function InstellingenPage() {
                   { l: 'VT', pct: Math.round((kcalUitVetten / totaalMacroKcal) * 100), c: 'var(--macro-fat)' },
                 ].map(({ l, pct, c }) => (
                   <div key={l} style={{ textAlign: 'center' }}>
-                    <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px', color: c }}>{pct}%</div>
+                    <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', color: c }}>{pct}%</div>
                     <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{l}</div>
                   </div>
                 ))}
@@ -155,7 +182,7 @@ export default function InstellingenPage() {
             border: opgeslagen ? '1px solid rgba(74,222,128,0.3)' : 'none',
             borderRadius: '14px',
             color: opgeslagen ? 'var(--success)' : '#fff',
-            fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px',
+            fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px',
             cursor: 'pointer',
             boxShadow: opgeslagen ? 'none' : '0 4px 20px rgba(85,81,184,0.4)',
             transition: 'all 0.3s',
@@ -168,7 +195,7 @@ export default function InstellingenPage() {
 
       {/* Info section */}
       <div style={{ margin: '0 16px 16px', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border)', padding: '20px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span>💡</span> Richtlijnen
         </div>
         {[
@@ -188,7 +215,7 @@ export default function InstellingenPage() {
 
       {/* Data management */}
       <div style={{ margin: '0 16px 16px', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border)', padding: '20px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span>⚙️</span> Gegevensbeheer
         </div>
         <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '16px' }}>
@@ -219,7 +246,7 @@ export default function InstellingenPage() {
       {/* About */}
       <div style={{ margin: '0 16px 24px', padding: '16px 20px', background: 'rgba(85,81,184,0.06)', borderRadius: '16px', border: '1px solid var(--border)' }}>
         <div style={{ fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center', lineHeight: 1.7 }}>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '4px' }}>VoedingsTracker v1.0</div>
+          <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '4px' }}>VoedingsTracker v1.0</div>
           <div>Bijhoud je voeding, calorieën en macronutriënten.</div>
           <div style={{ marginTop: '4px', color: 'var(--text-muted)' }}>38 producten in database · Geen account vereist</div>
         </div>

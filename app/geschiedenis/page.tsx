@@ -47,7 +47,7 @@ function DagKaart({ log, doelen }: DagKaartProps) {
       >
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
           <div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px' }}>
+            <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '15px' }}>
               {formatDatumKort(log.datum)}
             </div>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
@@ -55,7 +55,7 @@ function DagKaart({ log, doelen }: DagKaartProps) {
             </div>
           </div>
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '18px', color: kleur }}>
+            <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '18px', color: kleur }}>
               {totalen.kcal}
             </div>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>/ {doelen.kcal} kcal</div>
@@ -92,7 +92,7 @@ function DagKaart({ log, doelen }: DagKaartProps) {
                 {items.map((item) => (
                   <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(85,81,184,0.06)' }}>
                     <span style={{ fontSize: '13px', color: 'var(--text-primary)' }}>{item.naam} <span style={{ color: 'var(--text-muted)' }}>({item.portieGram}g)</span></span>
-                    <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontFamily: 'Syne, sans-serif', fontWeight: 600 }}>{item.kcal} kcal</span>
+                    <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontFamily: 'Lora, serif', fontWeight: 600 }}>{item.kcal} kcal</span>
                   </div>
                 ))}
               </div>
@@ -136,7 +136,7 @@ export default function GeschiedenisPage() {
     <div>
       {/* Header */}
       <div style={{ padding: '52px 20px 20px' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Geschiedenis</div>
+        <div style={{ fontFamily: 'Lora, serif', fontWeight: 800, fontSize: '28px', letterSpacing: '-0.02em', marginBottom: '4px' }}>Geschiedenis</div>
         <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{logs.length} dag{logs.length !== 1 ? 'en' : ''} bijgehouden</div>
       </div>
 
@@ -145,12 +145,12 @@ export default function GeschiedenisPage() {
         <div style={{ margin: '0 16px 20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <div style={{ background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border)', padding: '16px' }}>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 500, marginBottom: '6px' }}>Gemiddeld</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '22px', color: 'var(--text-primary)' }}>{gemiddeldeKcal}</div>
+            <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '22px', color: 'var(--text-primary)' }}>{gemiddeldeKcal}</div>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>kcal / dag</div>
           </div>
           <div style={{ background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border)', padding: '16px' }}>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 500, marginBottom: '6px' }}>Kcal doel</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '22px', color: 'var(--primary-light)' }}>{doelen.kcal}</div>
+            <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '22px', color: 'var(--primary-light)' }}>{doelen.kcal}</div>
             <div style={{ fontSize: '12px', color: gemiddeldeKcal <= doelen.kcal ? 'var(--success)' : 'var(--danger)' }}>
               {gemiddeldeKcal <= doelen.kcal ? '✓ Onder doel' : '↑ Boven doel'}
             </div>
@@ -195,7 +195,7 @@ export default function GeschiedenisPage() {
         {logs.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>📋</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>Nog niets gelogd</div>
+            <div style={{ fontFamily: 'Lora, serif', fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>Nog niets gelogd</div>
             <div style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6 }}>Begin met loggen via het menu om je geschiedenis te zien.</div>
           </div>
         ) : (
